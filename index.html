@@ -1,29 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
     <title>CS369 - myFriends</title>
 </head>
+
 <body>
     <div>
-        <div>
-            <h2> Prakaiploy's Friend </h2>
-            <h2 id="randomNumberDisplay"></h2>
-            <h2 onmouseover="style.color='pink'" onmouseout="style.color='black'" id="friendInfoHeader"></h2>
-    
+        <div class="box">
+            <h2 id="friendInfoHeader" onmouseover="style.color='pink'" onmouseout="style.color='#622e6d'"></h2>
+
             <form id="friendForm">
-                <label for="friendName">Nickname:</label>
+                <label for="friendName">Nickname</label>
                 <input type="text" id="friendName" name="friendName">
-                <label for="friendAge">Age:</label>
+                <br>
+                <label for="friendAge">Age</label>
                 <input type="number" id="friendAge" name="friendAge">
                 <br>
-                <button type="button" onclick="addFriend()">Add Friend</button>
-                <button type="button" onclick="resetBtn()">Reset</button>
+                <div>
+                    <button type="button" onclick="addFriend()">Add Friend</button>
+                    <button type="button" onclick="resetBtn()">Reset</button>
+                </div>
             </form>
+
+            <div id="addedFriends"></div>
         </div>
-        
-        <div id="addedFriends"></div>
+
+
         <div id="additionalButtons" style="display: none;">
             <button onclick="sum()">Age Sum</button>
             <button onclick="avgAge()">Average Age</button>
@@ -52,6 +58,7 @@
                     addedFriends++;
                     document.getElementById("friendName").value = "";
                     document.getElementById("friendAge").value = "";
+
                     updateFriendsList();
                     if (addedFriends === randomNumber) {
                         document.getElementById("additionalButtons").style.display = "block";
@@ -64,14 +71,19 @@
             }
         }
 
-
         function updateFriendsList() {
             let friendsDisplay = "";
             friendsList.forEach((friend, index) => {
-                friendsDisplay += `${index+1}.) Name: ${friend.name}, Age: ${friend.age}<br>`;
+                friendsDisplay += `${index + 1}.) Name: ${friend.name}, Age: ${friend.age}<br>`;
             });
-            document.getElementById("addedFriends").innerHTML = friendsDisplay;
+            document.getElementById("addedFriends").innerHTML = `<h3>Friends in the List:</h3>`;
+            document.getElementById("addedFriends").style.display = "block";
+            friendsList.forEach((friend, index) => {
+                document.getElementById("addedFriends").innerHTML +=
+                    `<div>${index + 1}.) Name: ${friend.name}, Age: ${friend.age}</div>`;
+            });
         }
+
 
         function resetBtn() {
             friendsList = [];
@@ -143,7 +155,7 @@
                 }
             });
             let output = oldestFriends.map(friend => `Name: ${friend.name}, Age: ${friend.age}`).join("\n");
-            alert(`Oldest friend(s):\n ${output}`);
+            alert(`Oldest friend(s):\n${output}`);
         }
     </script>
 
