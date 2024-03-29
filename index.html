@@ -6,6 +6,147 @@
     <title>CS369 - myFriends</title>
 </head>
 <body>
+    <div>
+        <div>
+            <h2> Prakaiploy's Friend </h2>
+            <h2 id="randomNumberDisplay"></h2>
+            <h2 onmouseover="style.color='pink'" onmouseout="style.color='black'" id="friendInfoHeader"></h2>
     
+            <form id="friendForm">
+                <label for="friendName">Nickname:</label>
+                <input type="text" id="friendName" name="friendName">
+                <label for="friendAge">Age:</label>
+                <input type="number" id="friendAge" name="friendAge">
+                <br>
+                <button type="button" onclick="addFriend()">Add Friend</button>
+                <button type="button" onclick="resetBtn()">Reset</button>
+            </form>
+        </div>
+        
+        <div id="addedFriends"></div>
+        <div id="additionalButtons" style="display: none;">
+            <button onclick="sum()">Age Sum</button>
+            <button onclick="avgAge()">Average Age</button>
+            <button onclick="youngest()">Youngest Friend</button>
+            <button onclick="oldest()">Oldest Friend</button>
+        </div>
+    </div>
+    <script>
+        let randomNumber = Math.floor(Math.random() * 9) + 1;
+        let friendsToAdd = randomNumber;
+        let addedFriends = 0;
+        let friendsList = [];
+
+        document.getElementById("friendInfoHeader").innerText = `Enter ${randomNumber} Friend(s) Information`;
+
+        function addFriend() {
+            if (addedFriends < friendsToAdd) {
+                let name = document.getElementById("friendName").value.trim();
+                let age = document.getElementById("friendAge").value.trim();
+                if (name !== "" && age !== "") {
+                    console.log(`Added Friend: ${name}, Age: ${age}`);
+                    friendsList.push({
+                        name,
+                        age
+                    });
+                    addedFriends++;
+                    document.getElementById("friendName").value = "";
+                    document.getElementById("friendAge").value = "";
+                    updateFriendsList();
+                    if (addedFriends === randomNumber) {
+                        document.getElementById("additionalButtons").style.display = "block";
+                    }
+                } else {
+                    alert("Please enter both friend name and age.");
+                }
+            } else {
+                alert("You've already added the required number of friends.");
+            }
+        }
+
+
+        function updateFriendsList() {
+            let friendsDisplay = "";
+            friendsList.forEach((friend, index) => {
+                friendsDisplay += `${index+1}.) Name: ${friend.name}, Age: ${friend.age}<br>`;
+            });
+            document.getElementById("addedFriends").innerHTML = friendsDisplay;
+        }
+
+        function resetBtn() {
+            friendsList = [];
+            addedFriends = 0;
+            document.getElementById("friendName").value = "";
+            document.getElementById("friendAge").value = "";
+            updateFriendsList();
+            randomNumber = Math.floor(Math.random() * 9) + 1;
+            friendsToAdd = randomNumber;
+            document.getElementById("friendInfoHeader").innerText = `Enter ${randomNumber} Friend(s) Information`;
+            document.getElementById("additionalButtons").style.display = "none"
+        }
+
+        function sum() {
+            let ageSum = 0;
+            friendsList.forEach(friend => {
+                ageSum += parseInt(friend.age);
+            });
+            alert(`Sum of ages is ${ageSum}.`);
+        }
+
+        function avgAge() {
+            let ageSum = 0;
+            friendsList.forEach(friend => {
+                ageSum += parseInt(friend.age);
+            });
+            let averageAge = ageSum / friendsList.length;
+            alert(`Average age is ${averageAge.toFixed(2)}.`);
+        }
+
+        function youngest() {
+            let minAge = Infinity;
+            let youngestFriends = [];
+            friendsList.forEach(friend => {
+                let age = parseInt(friend.age);
+                if (age < minAge) {
+                    minAge = age;
+                    youngestFriends = [{
+                        name: friend.name,
+                        age: friend.age
+                    }];
+                } else if (age === minAge) {
+                    youngestFriends.push({
+                        name: friend.name,
+                        age: friend.age
+                    });
+                }
+            });
+            let output = youngestFriends.map(friend => `Name: ${friend.name}, Age: ${friend.age}`).join("\n");
+            alert(`Youngest friend(s): \n${output}`);
+        }
+
+        function oldest() {
+            let maxAge = -Infinity;
+            let oldestFriends = [];
+            friendsList.forEach(friend => {
+                let age = parseInt(friend.age);
+                if (age > maxAge) {
+                    maxAge = age;
+                    oldestFriends = [{
+                        name: friend.name,
+                        age: friend.age
+                    }];
+                } else if (age === maxAge) {
+                    oldestFriends.push({
+                        name: friend.name,
+                        age: friend.age
+                    });
+                }
+            });
+            let output = oldestFriends.map(friend => `Name: ${friend.name}, Age: ${friend.age}`).join("\n");
+            alert(`Oldest friend(s):\n ${output}`);
+        }
+    </script>
+
 </body>
+
 </html>
