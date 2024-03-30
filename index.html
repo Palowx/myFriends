@@ -64,7 +64,7 @@
                         document.getElementById("additionalButtons").style.display = "block";
                     }
                 } else {
-                    alert("Please enter both friend name and age.");
+                    alert("Please enter both nickname and age.");
                 }
             } else {
                 alert("You've already added the required number of friends.");
@@ -95,6 +95,7 @@
             friendsToAdd = randomNumber;
             document.getElementById("friendInfoHeader").innerText = `Enter ${randomNumber} Friend(s) Information`;
             document.getElementById("additionalButtons").style.display = "none"
+            document.getElementById("addedFriends").style.display = "none";
         }
 
         function sum() {

@@ -48,6 +48,11 @@ h2 {
     transform: translate(-50%, -50%);
 }
 
+label{
+    color: #963b87;
+}
+
+
 .box {
     display: flex;
     width: 50%;
